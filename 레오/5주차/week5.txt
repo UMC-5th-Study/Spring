@@ -1,0 +1,22 @@
+-- 내가 진행중, 진행 완료한 미션 모아서 보는 쿼리(페이징 포함)
+-- 진행중인 미션
+select mission_spec, reward, deadline from misson mis, member_mission mem
+where mem.status = 'ongoing' and mis.id in (select mission_id from member_mission)
+order by mem.created_at desc, deadline limit 15;
+-- 완료한 미션
+select mission_spec, reward from misson mis, member_mission mem
+where mem.status = 'cleard' and mis.id in (select mission_id from member_mission)
+order by mem.created_at desc limit 15;
+
+-- 리뷰 작성 쿼리, 
+insert into review (body, score) values  ("너무 잘먹었어요", 4.7);
+
+-- 선택된 지역에서 도전 가능한 미션 목록
+select mission, reward, deadline from mission mis, store s, region r
+where r.id = s.region_id and mis.store_id = s.id and 
+mis.id not in (select mission_id from member_id where status = 'ongoing')
+order by mis.created_at desc limit 15;
+
+-- 마이 페이지 쿼리, 이메일, 폰번호, 닉네임, 내 포인트의 정보를 볼 수 있어야한다
+select email, name, point from member;
+
