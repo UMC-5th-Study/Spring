@@ -1,0 +1,1 @@
+select nickname, email, phone_num, point from user where id = 1
